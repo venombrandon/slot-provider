@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { startDemoSession, getSession } from "./services/sessionService";
 import { demoSpin, demoBuy } from "./services/gameService";
 import { getDemoBalance } from "./services/demoWalletService";
@@ -7,6 +8,17 @@ import { store } from "./store/memoryStore";
 
 export function buildApi() {
   const app = express();
+
+  // ✅ CORS zuerst
+  app.use(
+    cors({
+      origin: "http://localhost:5173",
+      methods: ["GET", "POST", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization", "Idempotency-Key"],
+    })
+  );
+
+  // ✅ JSON parser MUSS vor den POST routes
   app.use(express.json());
 
   app.post("/api/demo/session/start", (req, res) => {
