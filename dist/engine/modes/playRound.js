@@ -37,6 +37,8 @@ function playRoundBase(config, rng, mode = "base") {
     // 3) Total
     const totalWinX = baseWin + bonusWinX;
     return {
+        baseSpin: baseRes,
+        baseLineWins: baseLineWins,
         baseWinX: baseWin,
         bonusWinX,
         totalWinX,

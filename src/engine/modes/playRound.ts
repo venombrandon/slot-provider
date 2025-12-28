@@ -1,12 +1,15 @@
 import { RNG } from "../rng/rng";
 import { SlotConfig, Mode } from "../types";
-import { spinGrid } from "../spin";
-import { evalPaylines } from "../eval/evalLines";
+import { spinGrid, SpinResult } from "../spin";
+import { evalPaylines, LineWin } from "../eval/evalLines";
 import { resolveSpinWin } from "../eval/resolveSpinWin";
 import { featureRegistry } from "../features/registry";
 import { FeatureContext } from "../features/types";
 
 export interface RoundResult {
+  baseSpin: SpinResult; // ✅ neu
+  baseLineWins: LineWin[]; // ✅ neu (super fürs UI später)
+
   baseWinX: number;
   bonusWinX: number;
   totalWinX: number;
@@ -59,6 +62,9 @@ export function playRoundBase(
   const totalWinX = baseWin + bonusWinX;
 
   return {
+    baseSpin: baseRes,
+    baseLineWins: baseLineWins,
+
     baseWinX: baseWin,
     bonusWinX,
     totalWinX,
